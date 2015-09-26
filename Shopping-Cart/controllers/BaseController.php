@@ -1,45 +1,46 @@
 <?php
 
-abstract class BaseController
-{
-    protected $actionName;
+abstract class BaseController {
     protected $controllerName;
     protected $layoutName = DEFAULT_LAYOUT;
     protected $isViewRendered = false;
     protected $isPost = false;
+    protected $isLoggedIn = false;
+    protected $validationErrors;
+    protected $formValues;
 
-    function __construct($controllerName, $actionName) {
-        $this->actionName = $actionName;
+    function __construct($controllerName) {
         $this->controllerName = $controllerName;
-        $this->onInit();
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->isPost = true;
         }
+
+        if(isset($_SESSION['username'])) {
+            $this->isLoggedIn = true;
+        }
+
+        $this->onInit();
     }
 
     public function onInit() {
-        // implement initializing logic in the subclasses
+        // Implement initializing logic in the subclasses
     }
 
     public function index() {
-        // implement default action in the subclasses
+        // Implement the default action in the subclasses
     }
 
-    public function renderView($viewName = null, $includeLayout = true) {
-        if(!$this->isViewRendered) {
-            if($viewName == null) {
-                $viewName = $this->actionName;
-            }
+    public function renderView($viewName = "index", $includeLayout = true) {
+        if (!$this->isViewRendered) {
 
-            $viewFileName = 'views/' . $this->controllerName . '/' . $viewName .
-                '.php';
-            if($includeLayout) {
+            $viewFileName = 'views/' . $this->controllerName
+                . '/' . $viewName . '.php';
+            if ($includeLayout) {
                 $headerFile = 'views/layouts/' . $this->layoutName . '/header.php';
                 include_once($headerFile);
             }
-
             include_once($viewFileName);
-            if($includeLayout) {
+            if ($includeLayout) {
                 $footerFile = 'views/layouts/' . $this->layoutName . '/footer.php';
                 include_once($footerFile);
             }
@@ -53,18 +54,39 @@ abstract class BaseController
     }
 
     public function redirect(
-        $controllerName,
-        $actionName = null,
-        $params = null) {
+            $controllerName, $actionName = null, $params = null) {
         $url = '/' . urlencode($controllerName);
-        if($actionName != null) {
+        if ($actionName != null) {
             $url .= '/' . urlencode($actionName);
         }
-        if($params != null) {
+        if ($params != null) {
             $encodedParams = array_map($params, 'urlencode');
             $url .= implode('/', $encodedParams);
         }
         $this->redirectToUrl($url);
+    }
+
+    public function authorize() {
+        if(!$this->isLoggedIn) {
+            $this->addErrorMessage('Please login first!');
+            $this->redirect("account", "login");
+        }
+    }
+
+    public function addValidationError($field, $message) {
+        $this->validationErrors[$field] = $message;
+    }
+
+    public function getValidationError($field) {
+        return $this->validationErrors[$field];
+    }
+
+    public function addFieldValue($field, $value) {
+        $this->formValues[$field] = $value;
+    }
+
+    public function getFieldValue($field) {
+        return $this->formValues[$field];
     }
 
     function addMessage($msg, $type) {

@@ -1,39 +1,51 @@
 <?php
 
-class AuthorsController extends BaseController
-{
-    private static $db;
+class AuthorsController extends BaseController {
+    private $db;
 
     public function onInit() {
         $this->title = "Authors";
         $this->db = new AuthorsModel();
     }
 
+    public function index() {
+        $this->authorize();
+
+        $this->authors = $this->db->getAll();
+
+        $this->renderView();
+    }
+
     public function create() {
-        if($this->isPost){
-            $name = $_POST['name'];
-            $password = password_hash($_POST['password'], 1);
-            // $this->authors = $this->db->createAuthor($name, $password);
-            if($_POST['password'] != '' && $this->db->createAuthor($name, $password)) {
-                $this->authors = $this->db->createAuthor($name, $password);
+        $this->authorize();
+
+        if ($this->isPost) {
+            $name = $_POST['author_name'];
+            if(strlen($name) < 5) {
+                $this->addFieldValue('author_name', $name);
+                $this->addValidationError('author_name', 'The author name should be at least 5 characters long.');
+                return $this->renderView(__FUNCTION__);
+            }
+
+            if ($this->db->createAuthor($name)) {
                 $this->addInfoMessage("Author created.");
                 $this->redirect('authors');
             } else {
-                $this->addErrorMessage("Error while trying to create author.");
+                $this->addErrorMessage("Error creating author.");
             }
         }
+
+        $this->renderView(__FUNCTION__);
     }
 
     public function delete($id) {
-        if($this->db->deleteAuthor($id)) {
+        $this->authorize();
+
+        if ($this->db->deleteAuthor($id)) {
             $this->addInfoMessage("Author deleted.");
         } else {
             $this->addErrorMessage("Cannot delete author.");
         }
         $this->redirect('authors');
-    }
-
-    public function index() {
-        $this->authors = $this->db->getAll();
     }
 }
