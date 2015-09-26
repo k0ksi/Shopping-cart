@@ -6,11 +6,11 @@
         <th>Name</th>
         <th>Action</th>
     </tr>
-    <?php foreach($this->users as $user) : ?>
+    <?php foreach($this->authors as $author) : ?>
         <tr>
-            <td><?=$user['id'] ?></td>
-            <td><?=htmlspecialchars($user['name']) ?></td>
-            <td><a href="/users/delete/<?= $user['id']?>"/>[Delete]</td>
+            <td><?=$author['id'] ?></td>
+            <td><?=htmlspecialchars($author['name']) ?></td>
+            <td><a href="/users/delete/<?= $author['id']?>"/>[Delete]</td>
         </tr>
     <?php endforeach; ?>
 </table>

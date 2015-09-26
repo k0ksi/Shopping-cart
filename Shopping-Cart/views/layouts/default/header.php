@@ -12,7 +12,7 @@
         <ul>
             <a href="/"><img src="/content/images/site-logo.png"></a>
             <li><a href="/">Home</a></li>
-            <li><a href="/users">Users</a></li>
+            <li><a href="/authors">Authors</a></li>
         </ul>
     </header>
 
