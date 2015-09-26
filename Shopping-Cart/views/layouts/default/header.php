@@ -13,6 +13,7 @@
             <a href="/"><img src="/content/images/site-logo.png"></a>
             <li><a href="/">Home</a></li>
             <li><a href="/users">Users</a></li>
-            <li><a href="/products">Products</a></li>
         </ul>
     </header>
+
+    <?php include('messages.php'); ?>

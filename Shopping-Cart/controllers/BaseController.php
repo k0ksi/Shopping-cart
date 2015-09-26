@@ -6,11 +6,15 @@ abstract class BaseController
     protected $controllerName;
     protected $layoutName = DEFAULT_LAYOUT;
     protected $isViewRendered = false;
+    protected $isPost = false;
 
     function __construct($controllerName, $actionName) {
         $this->actionName = $actionName;
         $this->controllerName = $controllerName;
         $this->onInit();
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->isPost = true;
+        }
     }
 
     public function onInit() {
@@ -41,5 +45,41 @@ abstract class BaseController
             }
             $this->isViewRendered = true;
         }
+    }
+
+    public function redirectToUrl($url) {
+        header("Location: " . $url);
+        die;
+    }
+
+    public function redirect(
+        $controllerName,
+        $actionName = null,
+        $params = null) {
+        $url = '/' . urlencode($controllerName);
+        if($actionName != null) {
+            $url .= '/' . urlencode($actionName);
+        }
+        if($params != null) {
+            $encodedParams = array_map($params, 'urlencode');
+            $url .= implode('/', $encodedParams);
+        }
+        $this->redirectToUrl($url);
+    }
+
+    function addMessage($msg, $type) {
+        if (!isset($_SESSION['messages'])) {
+            $_SESSION['messages'] = array();
+        };
+        array_push($_SESSION['messages'],
+            array('text' => $msg, 'type' => $type));
+    }
+
+    function addInfoMessage($msg) {
+        $this->addMessage($msg, 'info');
+    }
+
+    function addErrorMessage($msg) {
+        $this->addMessage($msg, 'error');
     }
 }

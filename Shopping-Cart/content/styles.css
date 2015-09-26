@@ -3,11 +3,23 @@ body>header {
     padding: 5px;
 }
 
+header>ul>a>img{
+    width: 100px;
+    height: 100px;
+}
+
 body>header>a>img, body>header ul, body>header ul>li  {
     display: inline-block;
     vertical-align: middle;
 }
 
+li.info {
+    background: #77ff77;
+}
+
+li.error {
+    background: #ff7777;
+}
 
 body>footer {
     background: #eee;
