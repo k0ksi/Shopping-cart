@@ -13,23 +13,21 @@ class AccountController extends BaseController {
             $username = $_POST['username'];
             $password = $_POST['password'];
             if($username == null || strlen($username) < 5){
-                $this->addErrorMessage("Username is invalid!
-                Your name must be at least 5 characters long.");
+                $this->addErrorMessage(INVALID_USERNAME);
                 $this->redirect("account", "register");
             }
 
             if($password == null || strlen($password) < 5){
-                $this->addErrorMessage("Password is invalid!
-                Your password must be at least 5 characters long.");
+                $this->addErrorMessage(INVALID_PASSWORD);
                 $this->redirect("account", "register");
             }
             $isRegistered = $this->db->register($username, $password);
             if($isRegistered) {
                 $_SESSION['username'] = $username;
-                $this->addInfoMessage("Successful registration!");
+                $this->addInfoMessage(REGISTRATION_SUCCESS);
                 $this->redirect("books", 'index');
             } else {
-                $this->addErrorMessage("Registration failed!");
+                $this->addErrorMessage(REGISTRATION_FAILURE);
             }
         }
         $this->renderView(__FUNCTION__);
@@ -43,10 +41,10 @@ class AccountController extends BaseController {
 
             if($isLoggedIn) {
                 $_SESSION['username'] = $username;
-                $this->addInfoMessage("Logged in successfully!");
+                $this->addInfoMessage(LOGIN_SUCCESS);
                 return $this->redirect("books", "index");
             } else {
-                $this->addErrorMessage("Login error!");
+                $this->addErrorMessage(LOGIN_ERROR);
                 return $this->renderView(__FUNCTION__);
             }
         }
@@ -57,7 +55,7 @@ class AccountController extends BaseController {
         $this->authorize();
 
         unset($_SESSION['username']);
-        $this->addInfoMessage('Bye! See you soon!');
+        $this->addInfoMessage(BYE_MESSAGE);
         $this->redirectToUrl('/');
     }
 }

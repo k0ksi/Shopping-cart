@@ -23,15 +23,15 @@ class AuthorsController extends BaseController {
             $name = $_POST['author_name'];
             if(strlen($name) < 5) {
                 $this->addFieldValue('author_name', $name);
-                $this->addValidationError('author_name', 'The author name should be at least 5 characters long.');
+                $this->addValidationError('author_name', AUTHOR_VALIDATION_ERROR);
                 return $this->renderView(__FUNCTION__);
             }
 
             if ($this->db->createAuthor($name)) {
-                $this->addInfoMessage("Author created.");
+                $this->addInfoMessage(AUTHOR_CREATED);
                 $this->redirect('authors');
             } else {
-                $this->addErrorMessage("Error creating author.");
+                $this->addErrorMessage(AUTHOR_CREATION_ERROR);
             }
         }
 
@@ -42,9 +42,9 @@ class AuthorsController extends BaseController {
         $this->authorize();
 
         if ($this->db->deleteAuthor($id)) {
-            $this->addInfoMessage("Author deleted.");
+            $this->addInfoMessage(AUTHOR_DELETED);
         } else {
-            $this->addErrorMessage("Cannot delete author.");
+            $this->addErrorMessage(AUTHOR_NOT_DELETED);
         }
         $this->redirect('authors');
     }

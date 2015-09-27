@@ -8,7 +8,7 @@ abstract class BaseModel {
                 DB_HOST, DB_USER, DB_PASS, DB_NAME);
             self::$db->set_charset("utf8");
             if (self::$db->connect_errno) {
-                die('Cannot connect to database');
+                die(DB_CONNECTION_ERROR);
             }
         }
     }
