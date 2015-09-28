@@ -1,8 +1,8 @@
 <div>
     <ul>
-        <?php foreach($this->books as $book) :?>
+        <?php foreach($this->products as $product) :?>
             <li>
-                <?php echo $book[0]; ?>
+                <?php echo $product[0]; ?>
             </li>
         <?php endforeach; ?>
     </ul>

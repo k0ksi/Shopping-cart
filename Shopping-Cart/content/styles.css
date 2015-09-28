@@ -8,6 +8,11 @@ body>header>a>img, body>header ul, body>header ul>li  {
     vertical-align: middle;
 }
 
+body>header>a>img{
+    width: 100px;
+    height: 100px;
+}
+
 
 body>footer {
     background: #eee;

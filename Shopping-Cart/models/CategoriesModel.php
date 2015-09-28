@@ -1,26 +1,26 @@
 <?php
 
-class AuthorsModel extends BaseModel {
+class CategoriesModel extends BaseModel {
     public function getAll() {
         $statement = self::$db->query(
-            "SELECT * FROM authors ORDER BY id");
+            "SELECT * FROM categories ORDER BY id");
                 return $statement->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function createAuthor($name) {
+    public function createCategory($name) {
         if ($name == '') {
             return false;
         }
         $statement = self::$db->prepare(
-            "INSERT INTO authors VALUES(NULL, ?)");
+            "INSERT INTO categories VALUES(NULL, ?)");
         $statement->bind_param("s", $name);
         $statement->execute();
         return $statement->affected_rows > 0;
     }
 
-    public function deleteAuthor($id) {
+    public function deleteCategory($id) {
         $statement = self::$db->prepare(
-            "DELETE FROM authors WHERE id = ?");
+            "DELETE FROM categories WHERE id = ?");
         $statement->bind_param("i", $id);
         $statement->execute();
         return $statement->affected_rows > 0;

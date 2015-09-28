@@ -13,9 +13,9 @@
         <a href="/"><img src="/content/images/site-logo.png"></a>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/authors">Authors</a></li>
+            <li><a href="/categories">Categories</a></li>
             <?php if($this->isLoggedIn) : ?>
-                <li><a href="/books">Books</a></li>
+                <li><a href="/products">Products</a></li>
             <?php endif; ?>
         </ul>
         <?php if($this->isLoggedIn) : ?>

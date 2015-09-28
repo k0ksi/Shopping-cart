@@ -6,6 +6,7 @@ abstract class BaseController {
     protected $isViewRendered = false;
     protected $isPost = false;
     protected $isLoggedIn = false;
+    protected $isAdmin = false;
     protected $validationErrors;
     protected $formValues;
 

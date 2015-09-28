@@ -2,6 +2,21 @@
 
 class AccountModel extends BaseModel {
 
+    /*public function isAdmin($username) {
+        $statement = self::$db->prepare(
+            "SELECT is_admin FROM users WHERE username = ?"
+        );
+        $statement->bind_param('s', $_SESSION['username']);
+        $statement->execute();
+        $result = $statement->get_result()->fetch_all();
+
+        if($result[0][0]) {
+            return true;
+        }
+
+        return false;
+    }*/
+
     public function register($username, $password) {
         $statement = self::$db->prepare(
             "SELECT COUNT(id) FROM users WHERE username = ?"
@@ -14,7 +29,7 @@ class AccountModel extends BaseModel {
             return false;
         }
 
-        $hash_pass = password_hash($password, PASSWORD_BCRYPT);
+        $hash_pass = md5($password);
         $registerStatement = self::$db->prepare(
             "INSERT INTO users (username, password) VALUES (?, ?)"
         );
@@ -31,7 +46,7 @@ class AccountModel extends BaseModel {
         $statement->execute();
         $result = $statement->get_result()->fetch_assoc();
 
-        if(password_verify($password, $result['password'])) {
+        if(md5($password) === $result['password']) {
             return true;
         }
 

@@ -2,18 +2,7 @@
 <a href="/account/login">Login</a>
 <a href="/account/register">Register</a>
 
-<button id="show-books">
-    Show books
+<!--<button id="show-products">
+    Show products
 </button>
-<div id="books"></div>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script>
-    $('#show-books').on('click', function(ev) {
-        $.ajax({
-            url: '/books/showbooks',
-            method: 'GET',
-        }).success(function(data) {
-            $('#books').html(data);
-        })
-    })
-</script>
+<div id="products"></div>-->
