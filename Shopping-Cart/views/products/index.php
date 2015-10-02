@@ -22,3 +22,5 @@
 
 <a href="/products/index/<?= $this->page - 1 < 0 ? 0 : $this->page - 1 ?>/<?= $this->pageSize ?>">Previous</a>
 <a href="/products/index/<?= $this->page + 1 > $this->maxPageSize ? $this->maxPageSize : $this->page + 1 ?>/<?= (int)$this->pageSize ?>">Next</a>
+
+<a href="/products/create">[New]</a>

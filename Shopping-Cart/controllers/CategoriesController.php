@@ -48,4 +48,12 @@ class CategoriesController extends BaseController {
         }
         $this->redirect('categories');
     }
+
+    public function products($id) {
+        $this->authorize();
+
+        $this->products = $this->db->showCategoryProducts($id);
+
+        $this->renderView(__FUNCTION__);
+    }
 }

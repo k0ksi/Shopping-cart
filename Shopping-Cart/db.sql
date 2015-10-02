@@ -21,6 +21,8 @@ CREATE TABLE `cart`.`products` (
   `description` TEXT NOT NULL COMMENT '',
   `price` DECIMAL(10,0) NOT NULL COMMENT '',
   `quantity` INT NOT NULL COMMENT '',
+  `user_id` INT NULL COMMENT,
+  `category_id` INT NOT NULL COMMENT,
   PRIMARY KEY (`id`)  COMMENT '')
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8

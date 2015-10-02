@@ -29,3 +29,7 @@ define('CATEGORY_DELETED', "Category deleted.");
 define('CATEGORY_NOT_DELETED', "Cannot delete category.");
 define('LOGIN_FIRST', 'Please login first!');
 define('DB_CONNECTION_ERROR', 'Cannot connect to database');
+define('PRODUCT_VALIDATION_ERROR', 'The product name should be at least 5 characters long.');
+define('PRODUCT_CREATED', 'Product created.');
+define('PRODUCT_CREATION_ERROR', 'Error creating product.');
+define('INVALID_CATEGORY', 'No such category exists.');

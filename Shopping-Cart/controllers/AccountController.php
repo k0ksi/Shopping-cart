@@ -10,8 +10,8 @@ class AccountController extends BaseController {
 
     public function register() {
         if($this->isPost) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+            $username = htmlspecialchars($_POST['username']);
+            $password = htmlspecialchars($_POST['password']);
             if($username == null || strlen($username) < 5){
                 $this->addErrorMessage(INVALID_USERNAME);
                 $this->redirect("account", "register");
@@ -23,9 +23,10 @@ class AccountController extends BaseController {
             }
             $isRegistered = $this->db->register($username, $password);
             if($isRegistered) {
-                $_SESSION['isAdmin'] = $this->isAdmin();
+                $_SESSION['user_id'] = $this->db->getUserId($username)['id'];
                 $_SESSION['username'] = $username;
                 $this->addInfoMessage(REGISTRATION_SUCCESS);
+
                 $this->redirect("products", 'index');
             } else {
                 $this->addErrorMessage(REGISTRATION_FAILURE);
@@ -36,11 +37,12 @@ class AccountController extends BaseController {
 
     public function login(){
         if($this->isPost) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+            $username = htmlspecialchars($_POST['username']);
+            $password = htmlspecialchars($_POST['password']);
             $isLoggedIn = $this->db->login($username, $password);
 
             if($isLoggedIn) {
+                $_SESSION['user_id'] = $this->db->getUserId($username)['id'];
                 $_SESSION['username'] = $username;
                 $this->addInfoMessage(LOGIN_SUCCESS);
                 return $this->redirect("products", "index");
@@ -51,6 +53,7 @@ class AccountController extends BaseController {
         }
         $this->renderView(__FUNCTION__);
     }
+
 
     /*public function isAdmin() {
         $username = $_POST['username'];
