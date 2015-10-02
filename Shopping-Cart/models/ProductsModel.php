@@ -14,7 +14,7 @@ class ProductsModel extends BaseModel
 
     public function getFilteredProducts($from, $size) {
         $stmt = self::$db->prepare(
-            "SELECT id, name FROM products WHERE quantity > 0 LIMIT ?, ?"
+            "SELECT id, name, price FROM products WHERE quantity > 0 LIMIT ?, ?"
         );
         $stmt->bind_param('ii', $from, $size);
         $stmt->execute();
@@ -35,18 +35,6 @@ class ProductsModel extends BaseModel
         $statement->execute();
         return $statement->get_result()->fetch_assoc();
     }
-
-    /*public function createProduct($productName, $description, $price, $quantity, $category ) {
-        if ($productName == '' || $quantity == '' || $price == '' || $category == '' || $description == '') {
-            return false;
-        }
-        $userId = $_SESSION['user_id'];
-        $statement = self::$db->prepare(
-            "INSERT INTO products VALUES(NULL, ?, ?, ?, ?, ?, ?)");
-        $statement->bind_param("ssdiii", $productName, $description, $price, $quantity, $userId, $category);
-        $statement->execute();
-        return $statement->affected_rows > 0;
-    }*/
 
     public function createProduct($name, $description, $price, $quantity, $categoryName) {
         if($name == '' || $description == '' || $price == '' || $quantity == '' || $categoryName == '') {

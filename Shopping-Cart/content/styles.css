@@ -1,3 +1,9 @@
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css");
+
+html,body{
+    height: 100%
+}
+
 body>header {
     background: #eee;
     padding: 5px;
@@ -8,9 +14,10 @@ body>header>a>img, body>header ul, body>header ul>li  {
     vertical-align: middle;
 }
 
-body>header>a>img{
-    width: 100px;
-    height: 100px;
+img{
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
 }
 
 
@@ -33,5 +40,46 @@ li.error {
 }
 
 #logged-in-info form {
+    float: right;
+    margin-top: 10px;
+}
+
+#logged-in-info-span{
+    float: left;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+#login-overlay {
     display: inline-block;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    border-radius: 4px;
+}
+
+#button-paging{
+    display: inline-block;
+}
+
+footer {
+    margin-top: 5px;
+}
+
+#footer{
+    position:fixed;
+    height:50px;
+    background: #eee;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    margin-bottom:0px;
+}
+
+footer p {
+    padding-top: 10px;
 }

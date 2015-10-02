@@ -1,19 +1,23 @@
-<h1><?= htmlspecialchars($this->title) ?></h1>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Action</th>
-    </tr>
-    <?php foreach ($this->categories as $category) : ?>
+<div class="container">
+    <h2><?= htmlspecialchars($this->title) ?></h2>
+    <table class="table table">
+        <thead>
         <tr>
-            <td><?= $category['id'] ?></td>
-            <td><?= htmlspecialchars($category['name']) ?></td>
-            <td><a href="/categories/delete/<?=$category['id']?> ">[Delete]</a></td>
-            <td><a href="/categories/products/<?=$category['id']?> ">[Show Products]</a></td>
+            <th>ID</th>
+            <th>Name</th>
         </tr>
-    <?php endforeach ?>
-</table>
+        </thead>
+        <tbody>
+        <?php foreach ($this->categories as $category) : ?>
+            <tr>
+                <td><?= $category['id'] ?></td>
+                <td><?= htmlspecialchars($category['name']) ?></td>
+                <td><a href="/categories/delete/<?=$category['id']?> " class="btn btn-sm btn-danger"><span class="glyphicon"></span>Delete</a></td>
+                <td><a href="/categories/products/<?=$category['id']?> " class="btn btn-sm btn-primary"><span class="glyphicon"></span>Show products</a></td>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    </table>
 
-<a href="/categories/create">[New]</a>
+    <a href="/categories/create" class="btn btn-success">Create new</a>
+</div>

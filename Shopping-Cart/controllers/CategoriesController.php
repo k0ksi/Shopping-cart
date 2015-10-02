@@ -21,7 +21,7 @@ class CategoriesController extends BaseController {
 
         if ($this->isPost) {
             $name = $_POST['category_name'];
-            if(strlen($name) < 5) {
+            if(strlen($name) < 3) {
                 $this->addFieldValue('category_name', $name);
                 $this->addValidationError('category_name', CATEGORY_VALIDATION_ERROR);
                 return $this->renderView(__FUNCTION__);
