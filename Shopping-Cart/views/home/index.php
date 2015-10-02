@@ -1,4 +1,4 @@
-<h1 class="home-header">We're very glad to have you hear!</h1>
+<h1 class="home-header">We're very glad to have you here!</h1>
 <h2 class="home-header">Enjoy your stay!</h2>
 <?php if(!$this->isLoggedIn) :?>
     <div id="login-overlay" class="modal-dialog">

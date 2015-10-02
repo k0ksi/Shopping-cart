@@ -20,6 +20,7 @@
                 <td>
                     <?php echo $product[2] . ' $' ?>
                 </td>
+                <td><a href="/products/delete/<?=$product[0]?> " class="btn btn-sm btn-danger"><span class="glyphicon"></span>Delete</a></td>
             </tr>
         <?php endforeach ?>
         </tbody>

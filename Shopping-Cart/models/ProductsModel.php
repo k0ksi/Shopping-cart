@@ -41,8 +41,18 @@ class ProductsModel extends BaseModel
             return false;
         }
 
+        if (isset($_POST['$name'])) {
+            $_SESSION['new_product_name'] = $_POST['$name'];
+        }
+
         $userId = $_SESSION['user_id'];
         $categoryId = $this->getCategoryId($categoryName)['id'];
+        if(!is_int($categoryId)) {
+            return false;
+        } else {
+            $_SESSION['new_product_category'] = $categoryId;
+        }
+
         $statement = self::$db->prepare(
             "INSERT INTO products
               VALUES(NULL, ?, ?, ?, ?, ?, ?)"
@@ -52,4 +62,28 @@ class ProductsModel extends BaseModel
 
         return $statement->affected_rows > 0;
     }
+
+    public function deleteProduct($id) {
+        $statement = self::$db->prepare(
+            "DELETE FROM products WHERE id = ?");
+        $statement->bind_param("i", $id);
+        $statement->execute();
+        return $statement->affected_rows > 0;
+    }
+    /*public function bindProductWithCategory($productName, $categoryId) {
+        $stmt = self::$db->query(
+            "SELECT id FROM products
+              WHERE name = $productName AND category_id = $categoryId"
+        );
+
+        $id = intval($stmt->fetch_all()[0][0]);
+
+        $lastStmt = self::$db->prepare(
+            "INSERT INTO products_categories
+              VALUES(?, ?)"
+        );
+        $lastStmt->bind_param('ii', $id, $categoryId);
+        $lastStmt->execute();
+        return $stmt->affected_rows > 0;
+    }*/
 }

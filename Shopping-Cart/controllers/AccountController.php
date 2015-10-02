@@ -54,17 +54,6 @@ class AccountController extends BaseController {
         $this->renderView(__FUNCTION__);
     }
 
-
-    /*public function isAdmin() {
-        $username = $_POST['username'];
-        $isAdmin = $this->db->isAdmin($username);
-        if($isAdmin) {
-            return true;
-        }
-
-        return false;
-    }*/
-
     public function logout() {
         $this->authorize();
 

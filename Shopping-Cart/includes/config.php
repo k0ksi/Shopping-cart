@@ -10,7 +10,7 @@ define('DB_PASS', '');
 define('DB_NAME', 'cart');
 
 define('DEFAULT_PAGE_NUMBER', 0);
-define('DEFAULT_PAGE_SIZE', 10);
+define('DEFAULT_PAGE_SIZE', 7);
 
 define('INVALID_USERNAME', "Username is invalid!
                 Your name must be at least 5 characters long.");
@@ -33,3 +33,5 @@ define('PRODUCT_VALIDATION_ERROR', 'The product name should be at least 2 charac
 define('PRODUCT_CREATED', 'Product created.');
 define('PRODUCT_CREATION_ERROR', 'Error creating product.');
 define('INVALID_CATEGORY', 'No such category exists.');
+define('PRODUCT_DELETED', "Product deleted.");
+define('PRODUCT_NOT_DELETED', "Cannot delete product.");

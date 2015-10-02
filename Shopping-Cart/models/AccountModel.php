@@ -2,21 +2,6 @@
 
 class AccountModel extends BaseModel {
 
-    /*public function isAdmin($username) {
-        $statement = self::$db->prepare(
-            "SELECT is_admin FROM users WHERE username = ?"
-        );
-        $statement->bind_param('s', $_SESSION['username']);
-        $statement->execute();
-        $result = $statement->get_result()->fetch_all();
-
-        if($result[0][0]) {
-            return true;
-        }
-
-        return false;
-    }*/
-
     public function register($username, $password) {
         $statement = self::$db->prepare(
             "SELECT COUNT(id) FROM users WHERE username = ?"

@@ -58,9 +58,8 @@ class ProductsController extends BaseController {
                 return $this->renderView(__FUNCTION__);
             }
 
-
             $isCreated = $this->db->createProduct($name, $description, $price, $quantity, $category);
-
+            
             if ($isCreated) {
                 $this->addInfoMessage(PRODUCT_CREATED);
                 $this->redirect('products');
@@ -70,5 +69,16 @@ class ProductsController extends BaseController {
         }
 
         $this->renderView(__FUNCTION__);
+    }
+
+    public function delete($id) {
+        $this->authorize();
+
+        if ($this->db->deleteProduct($id)) {
+            $this->addInfoMessage(PRODUCT_DELETED);
+        } else {
+            $this->addErrorMessage(PRODUCT_NOT_DELETED);
+        }
+        $this->redirect('products');
     }
 }
