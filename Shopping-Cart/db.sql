@@ -59,26 +59,6 @@ INSERT INTO `cart`.`products` (`name`, `description`, `price`, `quantity`, user_
 INSERT INTO `cart`.`products` (`name`, `description`, `price`, `quantity`, user_id, category_id) VALUES ('Pride & Prejudice', 'Pride & Prejudice BluRay 1080p', '20', '300', '1', '2');
 INSERT INTO `cart`.`products` (`name`, `description`, `price`, `quantity`, user_id, category_id) VALUES ('MacBookPro 13', 'MacBookPro 13inch Intel i5 NVIDIA 760GTX', '2400', '3', '1', '4'); 
 
-CREATE TABLE `cart`.`products_categories` (
-  `product_id` INT NOT NULL COMMENT '',
-  `category_id` INT NOT NULL COMMENT '')
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
-
-INSERT INTO `cart`.`products_categories` (`product_id`, `category_id`) VALUES
-(1, 6),
-(2, 1),
-(3, 5),
-(4, 4),
-(5, 4),
-(6, 3),
-(7, 3),
-(8, 2),
-(9, 2),
-(10, 2),
-(11, 4);
-
 CREATE TABLE `cart`.`promotions` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `name` NVARCHAR(255) NOT NULL COMMENT '',
@@ -109,3 +89,10 @@ INSERT INTO `cart`.`reviews` (`id`, `message`, `user_id`, `product_id`) VALUES (
 INSERT INTO `cart`.`reviews` (`id`, `message`, `user_id`, `product_id`) VALUES ('2', 'Autodesk, the creators of the world\'s leading CAD software, continues to enhance the world of design software with products like AutoCAD. Autodesk is a leader in 3D design, engineering and of course entertainment software. They released their first edition of AutoCAD software back in 1982, and have since grown to be the leading designer of professional CAD software in the world. Like previous versions, this version of AutoCAD includes a plethora of added features and updates to many of the previous design tools.', '1', '7');
 INSERT INTO `cart`.`reviews` (`id`, `message`, `user_id`, `product_id`) VALUES ('3', 'A seventeen-year-old aristocrat falls in love with a kind, but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.', '2', '9');
 INSERT INTO `cart`.`reviews` (`id`, `message`, `user_id`, `product_id`) VALUES ('4', 'Sparks fly when spirited Elizabeth Bennet meets single, rich, and proud Mr. Darcy. But Mr. Darcy reluctantly finds himself falling in love with a woman beneath his class. Can each overcome their own pride and prejudice?', '2', '10');
+
+CREATE TABLE `cart`.`cart` (
+  `user_id` INT NOT NULL COMMENT '',
+  `product_id` INT NOT NULL COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;

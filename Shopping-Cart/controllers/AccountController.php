@@ -40,8 +40,10 @@ class AccountController extends BaseController {
             $username = htmlspecialchars($_POST['username']);
             $password = htmlspecialchars($_POST['password']);
             $isLoggedIn = $this->db->login($username, $password);
+            $userRole = $this->db->userRole($username, $password);
 
             if($isLoggedIn) {
+                $_SESSION['user-role'] = $userRole;
                 $_SESSION['user_id'] = $this->db->getUserId($username)['id'];
                 $_SESSION['username'] = $username;
                 $this->addInfoMessage(LOGIN_SUCCESS);
@@ -57,8 +59,23 @@ class AccountController extends BaseController {
     public function logout() {
         $this->authorize();
 
+        unset($_SESSION['user-role']);
         unset($_SESSION['username']);
         $this->addInfoMessage(BYE_MESSAGE);
         $this->redirectToUrl('/');
+    }
+
+    public function profile($page = DEFAULT_PAGE_NUMBER, $pageSize = DEFAULT_PAGE_SIZE) {
+        $this->authorize();
+
+        $productsCount = count($this->db->getAll());
+        $from = $page * ($pageSize);
+        $this->page = $page;
+        $this->pageSize = $pageSize;
+        $this->maxPageSize = (int)($productsCount / $pageSize);
+
+        $this->products = $this->db->getUsersProducts($from, $pageSize);
+
+        $this->renderView();
     }
 }

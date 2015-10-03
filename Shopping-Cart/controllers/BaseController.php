@@ -7,8 +7,10 @@ abstract class BaseController {
     protected $isPost = false;
     protected $isLoggedIn = false;
     protected $isAdmin = false;
+    protected $isEditor = false;
     protected $validationErrors;
     protected $formValues;
+    protected $userRole;
 
     function __construct($controllerName) {
         $this->controllerName = $controllerName;
@@ -18,6 +20,18 @@ abstract class BaseController {
 
         if(isset($_SESSION['username'])) {
             $this->isLoggedIn = true;
+        }
+
+        if(isset($_SESSION['user-role'])) {
+            if($_SESSION['user-role'] == 'admin') {
+                $this->userRole = 'admin';
+                $this->isAdmin = true;
+            } else if($_SESSION['user-role'] == 'editor') {
+                $this->userRole = 'editor';
+                $this->isEditor = true;
+            } else {
+                $this->userRole = 'user';
+            }
         }
 
         $this->onInit();
@@ -104,5 +118,28 @@ abstract class BaseController {
 
     function addErrorMessage($msg) {
         $this->addMessage($msg, 'error');
+    }
+
+    public function isAdmin() {
+        if (! $this->isLoggedIn) {
+            $this->addErrorMessage("Please login first");
+            $this->redirect("account", "login");
+        }
+        if ( $this->userRole != 'admin') {
+            $this->addErrorMessage("You don't have permissions");
+            $this->redirect("categories", "index");
+        }
+    }
+
+    public function isEditor() {
+        if(! $this->isLoggedIn) {
+            $this->addErrorMessage("Please login first");
+            $this->redirect("account", "login");
+        }
+
+        if($this->userRole != 'editor' && $this->userRole != 'admin') {
+            $this->addErrorMessage("You don't have permissions");
+            $this->redirect("categories", "index");
+        }
     }
 }

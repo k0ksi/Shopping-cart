@@ -14,7 +14,7 @@ class ProductsModel extends BaseModel
 
     public function getFilteredProducts($from, $size) {
         $stmt = self::$db->prepare(
-            "SELECT id, name, price FROM products WHERE quantity > 0 LIMIT ?, ?"
+            "SELECT id, name, price, quantity FROM products WHERE quantity > 0 LIMIT ?, ?"
         );
         $stmt->bind_param('ii', $from, $size);
         $stmt->execute();
@@ -37,6 +37,10 @@ class ProductsModel extends BaseModel
     }
 
     public function createProduct($name, $description, $price, $quantity, $categoryName) {
+        if (!isset($_POST['xsrf-token']) ||($_POST['xsrf-token'] != $_SESSION['xsrf-token'])) {
+            return false;
+        }
+
         if($name == '' || $description == '' || $price == '' || $quantity == '' || $categoryName == '') {
             return false;
         }
@@ -63,6 +67,73 @@ class ProductsModel extends BaseModel
         return $statement->affected_rows > 0;
     }
 
+    public function editProductCategory($categoryName, $productId) {
+        $stmt = self::$db->prepare(
+            "SELECT id FROM products
+              WHERE id = ?"
+        );
+        $stmt->bind_param('i', $productId);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        if($result['id'] != $productId) {
+            return false;
+        }
+
+        if (!isset($_POST['xsrf-token']) ||($_POST['xsrf-token'] != $_SESSION['xsrf-token'])) {
+            return false;
+        }
+
+        if($categoryName == '') {
+            return false;
+        }
+
+        $categoryId = (int)$this->getCategoryId($categoryName)['id'];
+        if($categoryId == null) {
+            return false;
+        }
+
+        $statement = self::$db->prepare(
+          "UPDATE products SET category_id = ? WHERE id = ?"
+        );
+        $statement->bind_param("ii", $categoryId, $productId);
+        $statement->execute();
+
+        return $statement->affected_rows > 0;
+    }
+
+    public function editProductQuantity($quantity, $productId) {
+        $stmt = self::$db->prepare(
+            "SELECT id FROM products
+              WHERE id = ?"
+        );
+        $stmt->bind_param('i', $productId);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        if($result['id'] != $productId) {
+            return false;
+        }
+
+        if (!isset($_POST['xsrf-token']) ||($_POST['xsrf-token'] != $_SESSION['xsrf-token'])) {
+            return false;
+        }
+
+        if($quantity == '') {
+            return false;
+        }
+
+        if($quantity == null) {
+            return false;
+        }
+
+        $statement = self::$db->prepare(
+            "UPDATE products SET quantity = ? WHERE id = ?"
+        );
+        $statement->bind_param("ii", $quantity, $productId);
+        $statement->execute();
+
+        return $statement->affected_rows > 0;
+    }
+
     public function deleteProduct($id) {
         $statement = self::$db->prepare(
             "DELETE FROM products WHERE id = ?");
@@ -70,20 +141,4 @@ class ProductsModel extends BaseModel
         $statement->execute();
         return $statement->affected_rows > 0;
     }
-    /*public function bindProductWithCategory($productName, $categoryId) {
-        $stmt = self::$db->query(
-            "SELECT id FROM products
-              WHERE name = $productName AND category_id = $categoryId"
-        );
-
-        $id = intval($stmt->fetch_all()[0][0]);
-
-        $lastStmt = self::$db->prepare(
-            "INSERT INTO products_categories
-              VALUES(?, ?)"
-        );
-        $lastStmt->bind_param('ii', $id, $categoryId);
-        $lastStmt->execute();
-        return $stmt->affected_rows > 0;
-    }*/
 }

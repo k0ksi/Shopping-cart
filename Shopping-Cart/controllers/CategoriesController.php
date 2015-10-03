@@ -18,6 +18,7 @@ class CategoriesController extends BaseController {
 
     public function create() {
         $this->authorize();
+        $this->isEditor();
 
         if ($this->isPost) {
             $name = $_POST['category_name'];
@@ -36,10 +37,12 @@ class CategoriesController extends BaseController {
         }
 
         $this->renderView(__FUNCTION__);
+
     }
 
     public function delete($id) {
         $this->authorize();
+        $this->isEditor();
 
         if ($this->db->deleteCategory($id)) {
             $this->addInfoMessage(CATEGORY_DELETED);

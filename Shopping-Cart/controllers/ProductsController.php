@@ -15,7 +15,7 @@ class ProductsController extends BaseController {
         $from = $page * ($pageSize);
         $this->page = $page;
         $this->pageSize = $pageSize;
-        $this->maxPageSize = $productsCount / $pageSize - 1;
+        $this->maxPageSize = (int)($productsCount / $pageSize);
 
         $this->products = $this->db->getFilteredProducts($from, $pageSize);
         $this->renderView();
@@ -28,6 +28,7 @@ class ProductsController extends BaseController {
 
     public function create() {
         $this->authorize();
+        $this->isEditor();
 
         if($this->isPost){
             $name = $_POST['product_name'];
@@ -73,6 +74,7 @@ class ProductsController extends BaseController {
 
     public function delete($id) {
         $this->authorize();
+        $this->isEditor();
 
         if ($this->db->deleteProduct($id)) {
             $this->addInfoMessage(PRODUCT_DELETED);
@@ -80,5 +82,45 @@ class ProductsController extends BaseController {
             $this->addErrorMessage(PRODUCT_NOT_DELETED);
         }
         $this->redirect('products');
+    }
+
+    public function editCategory() {
+        $this->authorize();
+        $this->isEditor();
+
+        if($this->isPost){
+            $productId = $_POST['product_id'];
+            $category = $_POST['category'];
+            $isEdited = $this->db->editProductCategory($category, $productId);
+
+            if ($isEdited) {
+                $this->addInfoMessage("Product category has been edited");
+                $this->redirect('products');
+            } else {
+                $this->addErrorMessage("An error occurred while editing the product category");
+            }
+        }
+
+        $this->renderView(__FUNCTION__);
+    }
+
+    public function editQuantity() {
+        $this->authorize();
+        $this->isEditor();
+
+        if($this->isPost){
+            $productId = $_POST['product_id'];
+            $quantity = $_POST['quantity'];
+            $isEdited = $this->db->editProductQuantity($quantity, $productId);
+
+            if ($isEdited) {
+                $this->addInfoMessage("Product quantity has been edited");
+                $this->redirect('products');
+            } else {
+                $this->addErrorMessage("An error occurred while editing the product quantity");
+            }
+        }
+
+        $this->renderView(__FUNCTION__);
     }
 }

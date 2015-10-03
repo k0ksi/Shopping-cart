@@ -28,6 +28,12 @@
                 <?php if($this->isLoggedIn) : ?>
                     <li><a href="/products">Products</a></li>
                 <?php endif; ?>
+                <?php if($this->isAdmin) : ?>
+                    <li><a href="/users">Users</a></li>
+                <?php endif; ?>
+                <?php if($this->isAdmin || $this->isEditor) : ?>
+                    <li><a href="/account/profile">Profile</a></li>
+                <?php endif; ?>
             </ul>
                 <?php if($this->isLoggedIn) : ?>
                     <div id='logged-in-info'>

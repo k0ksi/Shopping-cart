@@ -1,3 +1,5 @@
+<?php $_SESSION['xsrf-token'] = uniqid(); ?>
+
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 <div id="login-overlay" class="modal-dialog">
@@ -22,6 +24,7 @@
                                 <span class="help-block"></span>
                             </div>
                             <div id="loginErrorMsg" class="alert alert-error hide">Wrong username og password</div>
+                            <input type="hidden" name="xsrf-token" value="<?= $_SESSION['xsrf-token'] ?>"/>
                             <button type="submit" class="btn btn-success btn-block">Register</button>
                         </form>
                     </div>

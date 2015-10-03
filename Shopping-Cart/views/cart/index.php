@@ -1,28 +1,31 @@
 <div class="container">
-    <h2>Products</h2>
+    <h2>Your cart</h2>
     <table class="table table">
         <thead>
         <tr>
+            <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
             <th>Price</th>
             <th>Quantity</th>
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($this->products as $product) : ?>
+        <?php $price = 0; foreach ($this->products as $product) : ?>
+            <?php $price += (int)$product[2]; ?>
             <tr>
                 <td><?= htmlspecialchars($product[0]) ?></td>
                 <td><?= htmlspecialchars($product[1]) ?></td>
                 <td><?= htmlspecialchars($product[2]) . ' $' ?></td>
-                <td><?= ($product[3])?></td>
-                <td>
-                    <form id="form-add-cart" name="add-to-cart-form" method="get" action="/cart/add">
-                        <a href="/cart/add/<?=$product[4]?> " type="submit" class="btn btn-sm btn-success" name="add-to-cart"><span class="glyphicon"></span>Add to cart</a>
-                    </form>
-                </td>
+                <td><?= htmlspecialchars($product[3])?></td>
             </tr>
         <?php endforeach ?>
         </tbody>
     </table>
+    <h3>Total price: </h3>
+    <?php
+    $_SESSION['price_to_pay'] = $price;
+    ?>
+    <form method="post" action="/cart/checkout">
+        <button type="submit" class="btn btn-success btn-block">Checkout</button>
+    </form>
 </div>

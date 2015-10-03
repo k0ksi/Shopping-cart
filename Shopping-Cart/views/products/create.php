@@ -1,3 +1,5 @@
+<?php $_SESSION['xsrf-token'] = uniqid(); ?>
+
 <div id="login-overlay" class="modal-dialog">
     <div class="">
         <div class="modal-header">
@@ -26,6 +28,7 @@
                                 <input type="text" class="form-control" id="name" name="category" value="<?php echo $this->getFieldValue('category') ?>" required="" title="Please enter category name" placeholder="">
                                 <?php echo $this->getValidationError('category') ?>
                             </div>
+                            <input type="hidden" name="xsrf-token" value="<?= $_SESSION['xsrf-token'] ?>"/>
                             <button type="submit" class="btn btn-success btn-block">Create</button>
                         </form>
                     </div>

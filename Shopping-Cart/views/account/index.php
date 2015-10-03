@@ -1,5 +1,5 @@
 <div class="container">
-    <h2><?= htmlspecialchars($this->title) ?></h2>
+    <h2>My products</h2>
     <table class="table table">
         <thead>
         <tr>
@@ -25,7 +25,7 @@
                     <?php echo $product[3]?>
                 </td>
                 <?php if($this->isAdmin || $this->isEditor) :?>
-                <td><a href="/products/delete/<?=$product[0]?> " class="btn btn-sm btn-danger"><span class="glyphicon"></span>Delete</a></td>
+                    <td><a href="/products/delete/<?=$product[0]?> " class="btn btn-sm btn-danger"><span class="glyphicon"></span>Delete</a></td>
                 <?php endif; ?>
                 <td>
                     <form id="form-add-cart" name="add-to-cart-form" method="post" action="/cart/add">
@@ -33,16 +33,16 @@
                     </form>
                 </td>
                 <?php if($this->isAdmin || $this->isEditor) :?>
-                <td><a href="/products/editCategory/<?=$product[0]?> " class="btn btn-sm btn-warning"><span class="glyphicon"></span>Edit category</a></td>
-                <td><a href="/products/editQuantity/<?=$product[0]?> " class="btn btn-sm btn-info"><span class="glyphicon"></span>Edit quantity</a></td>
+                    <td><a href="/products/editCategory/<?=$product[0]?> " class="btn btn-sm btn-warning"><span class="glyphicon"></span>Edit category</a></td>
+                    <td><a href="/products/editQuantity/<?=$product[0]?> " class="btn btn-sm btn-info"><span class="glyphicon"></span>Edit quantity</a></td>
                 <?php endif; ?>
             </tr>
         <?php endforeach ?>
         </tbody>
     </table>
     <?php if($this->isAdmin || $this->isEditor) :?>
-    <a href="/products/create" class="btn btn-success button-paging">Create new</a>
+        <a href="/products/create" class="btn btn-success button-paging">Create new</a>
     <?php endif; ?>
-    <a href="/products/index/<?= $this->page - 1 < 0 ? 0 : $this->page - 1 ?>/<?= $this->pageSize ?>" class="btn btn-primary button-paging">Previous</a>
-    <a href="/products/index/<?= $this->page + 1 > $this->maxPageSize ? $this->maxPageSize : $this->page + 1 ?>/<?= (int)$this->pageSize ?>" class="btn btn-primary button-paging">Next</a>
+    <a href="/account/profile/<?= $this->page - 1 < 0 ? 0 : $this->page - 1 ?>/<?= $this->pageSize ?>" class="btn btn-primary button-paging">Previous</a>
+    <a href="/account/profile/<?= $this->page + 1 > $this->maxPageSize ? $this->maxPageSize : $this->page + 1 ?>/<?= (int)$this->pageSize ?>" class="btn btn-primary button-paging">Next</a>
 </div>

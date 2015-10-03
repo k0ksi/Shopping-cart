@@ -1,3 +1,5 @@
+<?php $_SESSION['xsrf-token'] = uniqid(); ?>
+
 <h1>Create new category</h1>
 
 <div id="login-overlay" class="modal-dialog">
@@ -17,6 +19,7 @@
                                 <?php echo $this->getValidationError('category_name') ?>
                                 <br/>
                             </div>
+                            <input type="hidden" name="xsrf-token" value="<?= $_SESSION['xsrf-token'] ?>"/>
                             <button type="submit" class="btn btn-success btn-block">Create</button>
                         </form>
                     </div>

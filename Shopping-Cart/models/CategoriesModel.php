@@ -8,6 +8,10 @@ class CategoriesModel extends BaseModel {
     }
 
     public function createCategory($name) {
+        if (!isset($_POST['xsrf-token']) ||($_POST['xsrf-token'] != $_SESSION['xsrf-token'])) {
+            return false;
+        }
+
         if ($name == '') {
             return false;
         }
@@ -31,12 +35,12 @@ class CategoriesModel extends BaseModel {
                 "SELECT
                 p.name,
                 p.description,
-                p.price
+                p.price,
+                p.quantity,
+                p.id
                 FROM categories c
-                INNER JOIN products_categories pc
-                ON pc.category_id = c.id
                 INNER JOIN products p
-                ON p.id = pc.product_id
+                ON p.category_id = c.id
                 WHERE c.id = ? AND p.quantity > 0"
         );
         $statement->bind_param('i', $id);
