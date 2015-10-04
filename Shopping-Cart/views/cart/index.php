@@ -6,7 +6,6 @@
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
-            <th>Quantity</th>
         </tr>
         </thead>
         <tbody>
@@ -16,12 +15,11 @@
                 <td><?= htmlspecialchars($product[0]) ?></td>
                 <td><?= htmlspecialchars($product[1]) ?></td>
                 <td><?= htmlspecialchars($product[2]) . ' $' ?></td>
-                <td><?= htmlspecialchars($product[3])?></td>
             </tr>
         <?php endforeach ?>
         </tbody>
     </table>
-    <h3>Total price: </h3>
+    <h3>Total price: <?php echo $price . ' $' ?></h3>
     <?php
     $_SESSION['price_to_pay'] = $price;
     ?>

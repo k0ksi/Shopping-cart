@@ -33,10 +33,25 @@ class CartController extends BaseController
     }
 
     public function checkout() {
-        var_dump($_SESSION['price_to_pay']);
-        var_dump($_SESSION['cart_elements']);
-        var_dump($_SESSION['user_id']);
+        if(!$this->db->checkForZeroQuantity()) {
+            $this->addErrorMessage("Check quantity of each and every product in your cart. There's a product/s with less then 1 available item.");
+            $this->redirect("products", 'index');
+        }
 
-        $this->renderView('checkout');
+        if(!$this->db->checkIfUserHasCash()) {
+            $this->addErrorMessage("You don't have enough money to purchase these items.");
+            $this->redirect("products", "index");
+        }
+
+        if(!$this->db->updateQuantities() || !$this->db->updateUserCash()) {
+            $this->addErrorMessage("There was an error during the transaction. No money was withdrawn from your account.");
+            $this->redirect("products", "index");
+        }
+
+        $_SESSION['price_to_pay'] = 0;
+        $_SESSION['cart_elements'] = null;
+        $this->addInfoMessage("Congratulations! You've successfully bought all of the selected items.");
+
+        $this->redirect('products', 'index');
     }
 }

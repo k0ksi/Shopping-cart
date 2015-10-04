@@ -23,7 +23,8 @@ class AccountController extends BaseController {
             }
             $isRegistered = $this->db->register($username, $password);
             if($isRegistered) {
-                $_SESSION['user_id'] = $this->db->getUserId($username)['id'];
+                $getUserId = $this->db->getUserId($username);
+                $_SESSION['user_id'] = $getUserId['id'];
                 $_SESSION['username'] = $username;
                 $this->addInfoMessage(REGISTRATION_SUCCESS);
 
@@ -44,7 +45,8 @@ class AccountController extends BaseController {
 
             if($isLoggedIn) {
                 $_SESSION['user-role'] = $userRole;
-                $_SESSION['user_id'] = $this->db->getUserId($username)['id'];
+                $getUserId = $this->db->getUserId($username);
+                $_SESSION['user_id'] = $getUserId['id'];
                 $_SESSION['username'] = $username;
                 $this->addInfoMessage(LOGIN_SUCCESS);
                 return $this->redirect("products", "index");
